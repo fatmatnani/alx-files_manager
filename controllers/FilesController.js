@@ -112,30 +112,17 @@ class FilesController {
           },
         );
         if (type === 'image') {
-          files.insertOne({
-            userId: user._id,
-            name,
-            type,
-            isPublic,
-            parentId: parentId || 0,
-            localPath: fileName,
-          }).then((result) => {
-            response.status(201).json({
-              id: result.insertedId,
-              userId: user._id,
-              name,
-              type,
-              isPublic,
-              parentId: parentId || 0,
-            });
-      
-            // Enqueue a job for thumbnail generation
-            fileQueue.add({
+          fileQueue.add(
+            {
               userId: user._id,
               fileId: result.insertedId,
-            });
-          }).catch((error) => console.log(error));
+            },
+          );
         }
+      }).catch((error) => console.log(error));
+    }
+    return null;
+  }
 
   static async getShow(request, response) {
     const user = await FilesController.getUser(request);
