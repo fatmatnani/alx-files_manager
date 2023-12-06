@@ -5,7 +5,6 @@ import mime from 'mime-types';
 import Queue from 'bull';
 import dbClient from '../utils/db';
 import redisClient from '../utils/redis';
-import imageThumbnail from 'image-thumbnail';
 
 const fileQueue = new Queue('fileQueue', 'redis://127.0.0.1:6379');
 
